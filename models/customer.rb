@@ -29,11 +29,12 @@ class Customer
     @id = SqlRunner.run(sql, values)[0]['id'].to_i
   end
 
-    def self.all()
-      sql = "
-        SELECT * FROM customers
-      "
-      SqlRunner.run(sql, nil).map {|customer| Customer.new(customer)}
+  def self.all()
+    sql = "
+      SELECT * FROM customers
+    "
+    values = []
+    SqlRunner.run(sql, values).map {|customer| Customer.new(customer)}
     end
 
   def delete()
@@ -43,7 +44,7 @@ class Customer
     "
     values = [@id]
     SqlRunner.run(sql, values)
-    Customer.all()
+    return Customer.all()
   end
 
   def self.delete_all()
@@ -52,6 +53,27 @@ class Customer
     "
     values = []
     SqlRunner.run(sql, values)
+    return Customer.all()
+  end
+
+  def update()
+    sql = "
+      UPDATE customers
+      SET
+      (
+        name,
+        funds
+      ) =
+      (
+        $1,
+        $2
+      )
+      WHERE id = $3
+      RETURNING *
+    "
+    values = [@name, @funds, @id]
+    result = SqlRunner.run(sql, values)[0]
+    return Customer.new(result)
   end
 
 

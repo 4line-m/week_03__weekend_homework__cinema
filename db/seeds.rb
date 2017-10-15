@@ -1,6 +1,8 @@
 require 'pry'
 require_relative '../models/customer.rb'
 
+Customer.delete_all
+
 cust_1 = Customer.new(
   {'name' => 'Aline',
   'funds' => '500'
