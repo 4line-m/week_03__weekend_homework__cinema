@@ -35,7 +35,7 @@ class Film
     "
     values = []
     SqlRunner.run(sql, values).map {|film| Film.new(film)}
-    end
+  end
 
   def delete()
     sql = "
