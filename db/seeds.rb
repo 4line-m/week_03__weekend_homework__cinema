@@ -3,6 +3,7 @@ require_relative '../models/customer.rb'
 require_relative '../models/film.rb'
 
 Customer.delete_all
+Film.delete_all
 
 cust_1 = Customer.new(
   {'name' => 'Aline',
